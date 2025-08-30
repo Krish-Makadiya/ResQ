@@ -77,9 +77,9 @@ const MemoryExercise: React.FC<{ onComplete: (score: number, duration: number, m
       // Highlight the button
       const button = document.getElementById(`memory-button-${seq[i]}`);
       if (button) {
-        button.classList.add('bg-primary');
+        button.classList.add('bg-violet-600', 'dark:bg-violet-500', 'shadow-lg', 'scale-110');
         setTimeout(() => {
-          button.classList.remove('bg-primary');
+          button.classList.remove('bg-violet-600', 'dark:bg-violet-500', 'shadow-lg', 'scale-110');
         }, 300);
       }
       i++;
@@ -116,14 +116,14 @@ const MemoryExercise: React.FC<{ onComplete: (score: number, duration: number, m
   };
 
   return (
-    <div className="p-6 bg-white dark:bg-neutral-800 rounded-xl shadow-md">
-      <h3 className="text-xl font-bold mb-4">Memory Sequence</h3>
-      <p className="mb-4">Remember and repeat the sequence of highlighted buttons.</p>
+    <div className="p-6 bg-white dark:bg-black rounded-xl shadow-lg dark:shadow-violet-900/20">
+      <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-violet-300">Memory Sequence</h3>
+      <p className="mb-4 text-gray-600 dark:text-violet-200">Remember and repeat the sequence of highlighted buttons.</p>
       
       {!gameStarted ? (
         <button
           onClick={startGame}
-          className="w-full py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+          className="w-full py-3 bg-violet-600 text-white rounded-lg hover:bg-violet-700 dark:bg-violet-700 dark:hover:bg-violet-800 transition-colors shadow-md"
         >
           Start Exercise
         </button>
@@ -136,18 +136,25 @@ const MemoryExercise: React.FC<{ onComplete: (score: number, duration: number, m
                 id={`memory-button-${num}`}
                 onClick={() => handleButtonClick(num)}
                 disabled={showingSequence || gameOver}
-                className={`h-24 rounded-lg transition-colors ${showingSequence || gameOver
-                  ? 'bg-neutral-200 dark:bg-neutral-700 cursor-not-allowed'
-                  : 'bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600'
+                className={`h-24 rounded-lg transition-all duration-300 transform hover:scale-105 ${
+                  showingSequence || gameOver
+                    ? 'bg-gray-200 dark:bg-gray-900 cursor-not-allowed'
+                    : 'bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800 border-2 border-violet-500/20 dark:border-violet-400/20'
                 }`}
               ></button>
             ))}
           </div>
           
           <div className="text-center">
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">
+            <p className={`text-sm font-medium ${
+              showingSequence 
+                ? 'text-violet-600 dark:text-violet-400' 
+                : gameOver 
+                  ? 'text-red-600 dark:text-red-400' 
+                  : 'text-gray-700 dark:text-violet-300'
+            }`}>
               {showingSequence 
-                ? 'Watch the sequence...' 
+                ? 'Watching the sequence...' 
                 : gameOver 
                   ? 'Game Over!' 
                   : `Repeat the sequence (${userSequence.length}/${sequence.length})`}
