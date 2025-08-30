@@ -30,6 +30,18 @@ const DarkGradient = ({ className = "", style = {} }) => {
                     enabled: true,
                 },
                 {
+                    color: "#181818",
+                    enabled: true,
+                },
+                {
+                    color: "#181818",
+                    enabled: true,
+                },
+                {
+                    color: "#181818",
+                    enabled: true,
+                },
+                {
                     color: "#6B8EFF",
                     enabled: true,
                 },

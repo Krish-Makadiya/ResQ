@@ -33,11 +33,9 @@ const whyChooseUs = [
 ];
 
 export default function WhyChooseUsSection() {
-    const { isSignedIn } = useAuth();
-    const navigate = useNavigate();
 
     return (
-        <section className="relative w-full bg-light-bg dark:bg-dark-bg py-20 px-4 flex justify-center z-10">
+        <section className="h-screen relative w-full bg-light-bg dark:bg-dark-bg py-20 px-4 flex justify-center z-10">
             <div className="max-w-6xl w-full">
                 <div className="mb-8">
                     <span className="uppercase text-xs tracking-widest text-light-primary-text dark:text-dark-primary-text font-semibold bg-light-surface dark:bg-dark-surface px-3 py-1 rounded-full">

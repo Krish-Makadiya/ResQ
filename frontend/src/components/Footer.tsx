@@ -3,7 +3,7 @@ import { ArrowRight, PhoneCall } from "lucide-react";
 
 export default function Footer() {
     return (
-        <footer className="relative w-full bg-light-bg dark:bg-dark-bg md:py-16 pb-16 pt-6 md:pt-30 px-4">
+        <footer className="border-t-[1px] border-neutral-700 relative w-full bg-light-bg dark:bg-dark-bg md:py-16 pb-16 pt-6 md:pt-30 px-4">
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
                 {/* Logo and tagline */}
                 <div className="flex flex-col items-center md:items-start gap-3">
