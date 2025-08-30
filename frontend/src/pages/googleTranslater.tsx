@@ -230,7 +230,7 @@ export default function GoogleTranslater() {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-label="Translate page"
-        className="flex items-center gap-2 px-3 py-1 rounded-md text-neutral-200 dark:text-neutral-200 hover:bg-white/10 dark:hover:bg-white/10 transition-colors"
+        className="flex items-center gap-2 px-3 py-1 rounded-md text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50 transition-colors"
       >
         {/* Translate-like icon */}
         <svg
@@ -255,20 +255,20 @@ export default function GoogleTranslater() {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 min-w-[260px] rounded-xl border border-neutral-700 bg-neutral-900/95 backdrop-blur shadow-card p-3 z-[60]">
-          <div className="text-xs font-medium mb-2 text-neutral-300">Choose language</div>
+        <div className="absolute right-0 mt-2 min-w-[260px] rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white/95 dark:bg-neutral-900/95 backdrop-blur shadow-card p-3 z-[60]">
+          <div className="text-xs font-medium mb-2 text-neutral-500 dark:text-neutral-300">Choose language</div>
           <div className="grid grid-cols-2 gap-1">
             {LANGS.map((l) => (
               <button
                 key={l.code}
-                className="text-left text-sm px-2 py-1 rounded hover:bg-neutral-800 active:bg-neutral-700"
+                className="text-left text-sm px-2 py-1 rounded text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800"
                 onClick={() => handleSelect(l.code)}
               >
                 {l.label}
               </button>
             ))}
           </div>
-          <div className="mt-2 text-[11px] text-neutral-400">Powered by Google Translate</div>
+          <div className="mt-2 text-[11px] text-neutral-500 dark:text-neutral-400">Powered by Google Translate</div>
         </div>
       )}
 

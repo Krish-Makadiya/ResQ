@@ -22,22 +22,16 @@ export default function Appointment() {
           
           <ul className="space-y-4">
             <EmergencyContact 
-              label="National Suicide & Crisis Lifeline" 
-              contact="988" 
-              href="tel:988" 
-              region="US" 
+              label="Vandrevala Foundation" 
+              contact="9999666555" 
+              href="tel:+919999666555" 
+              region="India (24/7)" 
             />
             <EmergencyContact 
-              label="Emergency Services" 
-              contact="112" 
-              href="tel:112" 
-              region="EU" 
-            />
-            <EmergencyContact 
-              label="Emergency Services" 
-              contact="999" 
-              href="tel:999" 
-              region="UK" 
+              label="Kiran Helpline" 
+              contact="18005990019" 
+              href="tel:+9118005990019" 
+              region="India (Toll-Free)" 
             />
           </ul>
         </div>
@@ -52,28 +46,29 @@ export default function Appointment() {
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
               </svg>
             </div>
-            <h3 className="text-xl font-semibold">Find Help</h3>
+            <h3 className="text-xl font-semibold">Find Help in India</h3>
           </div>
           
           <div className="space-y-4">
-            <a 
-              href="https://www.psychologytoday.com" 
-              target="_blank" 
-              rel="noreferrer" 
-              className="block p-4 rounded-lg bg-white/50 dark:bg-neutral-800/50 hover:shadow-md transition-all duration-300 transform hover:translate-x-1"
-            >
-              <div className="font-medium">Psychology Today</div>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">Find therapists, counselors, and treatment centers in your area.</p>
-            </a>
             
             <a 
-              href="https://www.nami.org" 
+              href="https://www.vandrevalafoundation.com/" 
               target="_blank" 
               rel="noreferrer" 
               className="block p-4 rounded-lg bg-white/50 dark:bg-neutral-800/50 hover:shadow-md transition-all duration-300 transform hover:translate-x-1"
             >
-              <div className="font-medium">National Alliance on Mental Illness</div>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">Resources, support groups, and education for individuals and families.</p>
+              <div className="font-medium">Vandrevala Foundation</div>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">Resources and support for mental health, including their 24/7 helpline.</p>
+            </a>
+
+            <a 
+              href="https://www.thebanyan.org/" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="block p-4 rounded-lg bg-white/50 dark:bg-neutral-800/50 hover:shadow-md transition-all duration-300 transform hover:translate-x-1"
+            >
+              <div className="font-medium">The Banyan</div>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">Comprehensive mental health services for vulnerable individuals in India.</p>
             </a>
           </div>
         </div>
