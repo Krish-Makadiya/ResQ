@@ -17,7 +17,7 @@ import quizRouter from './routes/quiz.js';
 import onboardingRouter from './routes/onboarding.js';
 import wellnessRouter from './routes/wellness.js';
 import alertsRouter from './routes/alerts.js';
-
+import booksRouter from './routes/books.js';
 
 const app = express();
 
@@ -57,8 +57,15 @@ app.use((req, res, next) => {
   const openPaths = [
     '/api/health',
     '/api/library/public',
+    '/api/books/search',
   ];
-  if (req.method === 'GET' && (req.path === '/api/health' || req.path.startsWith('/api/library/public'))) {
+  if (
+    req.method === 'GET' && (
+      req.path === '/api/health' ||
+      req.path.startsWith('/api/library/public') ||
+      req.path.startsWith('/api/books/search')
+    )
+  ) {
     return next();
   }
   return ClerkExpressRequireAuth()(req, res, next);
@@ -66,7 +73,14 @@ app.use((req, res, next) => {
 
 // Guard: require authenticated user for secured /api routes
 app.use('/api', (req, res, next) => {
-  if (req.method === 'GET' && req.path.startsWith('/library/public')) return next();
+  if (
+    req.method === 'GET' && (
+      req.path.startsWith('/library/public') ||
+      req.path.startsWith('/books/search')
+    )
+  ) {
+    return next();
+  }
   const auth = (req as any).auth;
   if (!auth?.userId) return res.status(401).json({ error: 'Unauthorized' });
   next();
@@ -84,6 +98,8 @@ app.use('/api/quiz', quizRouter);
 app.use('/api/onboarding', onboardingRouter);
 app.use('/api/wellness', wellnessRouter);
 app.use('/api/alerts', alertsRouter);
+// Public Google Books proxy
+app.use('/api/books', booksRouter);
 
 const port = Number(process.env.PORT) || 4000;
 app.listen(port, () => {
