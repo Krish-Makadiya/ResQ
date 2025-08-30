@@ -14,6 +14,8 @@ import CognitiveExercises from './pages/CognitiveExercises';
 import Onboarding from './pages/Onboarding';
 import { SidebarLayout } from './components/SidebarLayout';
 import { ThemeToggle } from './components/ThemeToggle';
+import GoogleTranslater from './pages/googleTranslater';
+
 // GlobalAudioPlayer removed per request
 
 function ProtectedRoutes() {
@@ -45,6 +47,7 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-brand-lavender/5 to-brand-blue/10 dark:from-neutral-950 dark:to-neutral-900">
       <div className="fixed top-4 right-4 z-50 flex items-center gap-3">
         <ThemeToggle />
+        <GoogleTranslater />
         <div className="relative overflow-hidden rounded-full shadow-md hover:shadow-glow transition-all duration-300">
           <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-brand-blue/20 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
           <UserButton
