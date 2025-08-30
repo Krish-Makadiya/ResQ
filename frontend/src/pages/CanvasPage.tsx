@@ -65,16 +65,11 @@ export default function CanvasPage() {
                 <h2 className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-primary to-brand-blue animate-gradient bg-300%">
                     Express Yourself
                 </h2>
-                <button
-                    onClick={onSubmit}
-                    disabled={saving}
-                    className="rounded-md bg-primary text-white px-4 py-2 hover:bg-primary/90 transition-colors">
-                    {saving ? "Submitting..." : "Submit"}
-                </button>
             </div>
 
             {/* Tab buttons */}
-            <div className="flex gap-2 mb-2">
+            <div className="flex gap-2 mb-2 justify-between">
+                <div className="flex gap-2 mb-2">
                 <TabButton
                     active={activeTab === "draw"}
                     onClick={() => setActiveTab("draw")}
@@ -93,6 +88,15 @@ export default function CanvasPage() {
                     icon={<AlertTriangle size={18} />}
                     label="What's not working?"
                 />
+                </div>
+                <div>
+                <button
+                    onClick={onSubmit}
+                    disabled={saving}
+                    className="rounded-md bg-primary text-white px-4 py-2 hover:bg-primary/90 transition-colors">
+                    {saving ? "Submitting..." : "Submit"}
+                </button>
+                </div>
             </div>
 
             {/* Content based on active tab */}
