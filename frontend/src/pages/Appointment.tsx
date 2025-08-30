@@ -81,7 +81,7 @@ export default function Appointment() {
       
       <div className="mt-8 p-6 rounded-xl glass-effect shadow-card text-center animate-fadeInUp" style={{ animationDelay: '300ms' }}>
         <p className="text-lg">
-          MindWell is a supportive companion, not a replacement for professional care.
+          ResQ is a supportive companion, not a replacement for professional care.
         </p>
         <div className="mt-4 h-1 w-32 mx-auto bg-gradient-to-r from-brand-blue to-brand-purple rounded-full animate-shimmer bg-[linear-gradient(90deg,rgba(0,0,0,0)_0%,rgba(255,255,255,.6)_50%,rgba(0,0,0,0)_100%)] bg-[length:200%_100%]" />
       </div>

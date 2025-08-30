@@ -1,4 +1,4 @@
-# MindWell
+# ResQ
 
 Full-stack web app (Vite + React + Clerk + Tailwind/shadcn style) with Express + Prisma + PostgreSQL backend.
 

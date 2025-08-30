@@ -20,7 +20,7 @@ export default function Landing() {
           </div>
           
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary via-brand-indigo to-brand-blue animate-gradient bg-300%">
-            MindWell
+            ResQ
           </h1>
           
           <p className="mt-6 text-xl md:text-2xl text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto leading-relaxed">

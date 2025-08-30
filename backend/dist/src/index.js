@@ -78,5 +78,5 @@ app.use('/api/wellness', wellnessRouter);
 app.use('/api/alerts', alertsRouter);
 const port = Number(process.env.PORT) || 4000;
 app.listen(port, () => {
-    console.log(`MindWell backend listening on http://localhost:${port}`);
+    console.log(`ResQ backend listening on http://localhost:${port}`);
 });

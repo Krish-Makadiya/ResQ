@@ -114,7 +114,7 @@ const WellnessScore = () => {
       </div>
 
       <div className="flex flex-col items-center mb-6">
-        <div className="relative w-32 h-32 mb-4">
+        <div className="relative w-40 h-40 mb-4">
           <svg className="w-full h-full" viewBox="0 0 36 36">
             <path
               d="M18 2.0845
@@ -139,7 +139,7 @@ const WellnessScore = () => {
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
               <span className={`text-3xl font-bold ${getScoreColor(wellnessData.overallScore)}`}>{wellnessData.overallScore}</span>
-              <span className="text-gray-500 dark:text-gray-400 text-sm block">{getScoreLabel(wellnessData.overallScore)}</span>
+              <span className="text-gray-500 dark:text-gray-400 text-xs block">{getScoreLabel(wellnessData.overallScore)}</span>
             </div>
           </div>
         </div>

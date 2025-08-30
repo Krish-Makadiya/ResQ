@@ -23,7 +23,7 @@ export function SidebarLayout({ children }: { children: React.ReactNode }) {
               M
             </div>
             <h1 className={`text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-brand-blue transition-all duration-300 ${open ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-              MindWell
+              ResQ
             </h1>
           </div>
           <button 

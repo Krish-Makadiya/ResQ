@@ -1,4 +1,4 @@
-// Prisma schema for MindWell - Enhanced Mental Health Application
+// Prisma schema for ResQ - Enhanced Mental Health Application
 
 generator client {
   provider = "prisma-client-js"
