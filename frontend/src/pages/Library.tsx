@@ -13,10 +13,23 @@ type Book = {
   htmlUrl?: string;
 };
 
+// Minimal shape for Google Books response mapping to our Book type
+type GoogleVolume = {
+  id: string;
+  volumeInfo?: {
+    title?: string;
+    authors?: string[];
+    description?: string;
+    imageLinks?: { thumbnail?: string };
+    infoLink?: string;
+    previewLink?: string;
+  };
+};
+
 /**
  * A new component to display the details for a single selected book.
  */
-function BookDetailView({ book, onBack }: { book: Book; onBack: () => void }) {
+function BookDetailView({ book, onBack, source }: { book: Book; onBack: () => void; source: 'public' | 'google' }) {
   return (
     // This wrapper div controls the size and centers the detail view
     <div className="max-w-4xl mx-auto animate-fadeInUp">
@@ -48,14 +61,14 @@ function BookDetailView({ book, onBack }: { book: Book; onBack: () => void }) {
                 rel="noopener noreferrer"
                 className="inline-block mt-6 px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-colors"
               >
-                View on Gutenberg
+                {source === 'google' ? 'View on Google Books' : 'View on Gutenberg'}
               </a>
             )}
           </div>
         </div>
 
-        {/* Embedded reader */}
-        <BookReader bookId={book.id} />
+        {/* Embedded reader only for our public library books */}
+        {source === 'public' && <BookReader bookId={book.id} />}
       </div>
     </div>
   );
@@ -133,28 +146,35 @@ function escapeHtml(s: string) {
  * The main Library component, updated to switch between grid and detail views.
  */
 export default function Library() {
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<Book[]>([]); // public/hardcoded books
+  const [gBooks, setGBooks] = useState<Book[]>([]); // Google Books results
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
-  const [query, setQuery] = useState('self help');
+  const [selectedSource, setSelectedSource] = useState<'public' | 'google' | null>(null);
+  const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [nextPage, setNextPage] = useState<number | undefined>(undefined);
   const [loading, setLoading] = useState(false);
+  const [googleMode, setGoogleMode] = useState(false);
 
-  // Debounce query
+  // Debounce Google Books search when user types
   useEffect(() => {
+    const q = query.trim();
+    if (!q) {
+      // back to default library view
+      setGoogleMode(false);
+      setGBooks([]);
+      return;
+    }
     const id = setTimeout(() => {
-      setBooks([]);
-      setPage(1);
-      setNextPage(undefined);
-      void load(query, 1, true);
+      setGoogleMode(true);
+      void searchGoogle(q);
     }, 300);
     return () => clearTimeout(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   useEffect(() => {
-    // initial load
-    void load(query, 1, true);
+    // initial load of default public library
+    void load('self help', 1, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -174,9 +194,37 @@ export default function Library() {
     }
   };
 
+  // Google Books search via backend proxy
+  const searchGoogle = async (q: string) => {
+    try {
+      setLoading(true);
+      const url = new URL(`${(import.meta as any).env.VITE_API_URL || 'http://localhost:4000/api'}/books/search`);
+      url.searchParams.set('q', q);
+      const res = await fetch(url.toString());
+      const data = await res.json();
+      const items: GoogleVolume[] = data?.items || [];
+      const mapped: Book[] = items.map((v) => {
+        const info = v.volumeInfo || {};
+        return {
+          id: v.id,
+          title: info.title || 'Untitled',
+          author: info.authors?.join(', ') || 'Unknown',
+          coverUrl: info.imageLinks?.thumbnail,
+          description: info.description,
+          linkUrl: info.previewLink || info.infoLink,
+        };
+      });
+      setGBooks(mapped);
+    } catch {
+      setGBooks([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // 2. If a book is selected, render the detail view
-  if (selectedBook) {
-    return <BookDetailView book={selectedBook} onBack={() => setSelectedBook(null)} />;
+  if (selectedBook && selectedSource) {
+    return <BookDetailView book={selectedBook} source={selectedSource} onBack={() => { setSelectedBook(null); setSelectedSource(null); }} />;
   }
 
   // 3. Otherwise, render the grid view
@@ -184,24 +232,25 @@ export default function Library() {
     <div className="animate-fadeInUp">
       <div className="relative mb-8 rounded-2xl p-6 glass-effect shadow-card overflow-hidden">
         <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-tr from-brand-teal/30 to-brand-indigo/30 rounded-full blur-2xl opacity-70 animate-pulse" />
-        <h2 className="text-2xl font-bold relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-brand-indigo to-brand-teal animate-gradient bg-300%">Self-Help Library</h2>
-        <p className="text-neutral-600 dark:text-neutral-300 relative z-10 mt-2">Explore books that can guide you on your personal growth journey.</p>
+        <h2 className="text-2xl font-bold relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-brand-indigo to-brand-teal animate-gradient bg-300%">Library</h2>
+        <p className="text-neutral-600 dark:text-neutral-300 relative z-10 mt-2">Search Google Books or browse our default collection.</p>
         <div className="mt-4 relative z-10">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search public domain books (e.g., habit, focus, stoic)"
+            placeholder="Search books..."
             className="w-full md:w-96 px-3 py-2 rounded-lg border dark:border-neutral-700 bg-white/70 dark:bg-neutral-800/50"
           />
         </div>
       </div>
       
+      {/* Grid: show Google results when searching, else show default library */}
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {books.map((b, index) => (
+        {(googleMode ? gBooks : books).map((b, index) => (
           // 4. Changed <a> tag to a <button> with an onClick handler
           <button 
             key={b.id} 
-            onClick={() => setSelectedBook(b)}
+            onClick={() => { setSelectedBook(b); setSelectedSource(googleMode ? 'google' : 'public'); }}
             className="group rounded-xl overflow-hidden block bg-white/60 dark:bg-neutral-800/50 backdrop-blur-sm shadow-card hover:shadow-glow transition-all duration-500 transform hover:-translate-y-1 text-left"
             style={{ animationDelay: `${index * 100}ms` }}
           >
@@ -222,19 +271,22 @@ export default function Library() {
         ))}
       </div>
 
-      <div className="mt-6 flex justify-center">
-        {nextPage ? (
-          <button
-            disabled={loading}
-            onClick={() => load(query, nextPage!, false)}
-            className="px-4 py-2 rounded-lg border bg-white/70 dark:bg-neutral-800/50 hover:bg-white"
-          >
-            {loading ? 'Loading…' : 'Load more'}
-          </button>
-        ) : (
-          <div className="text-sm opacity-60">No more results</div>
-        )}
-      </div>
+      {/* Pagination only for default library (not for Google results) */}
+      {!googleMode && (
+        <div className="mt-6 flex justify-center">
+          {nextPage ? (
+            <button
+              disabled={loading}
+              onClick={() => load('self help', nextPage!, false)}
+              className="px-4 py-2 rounded-lg border bg-white/70 dark:bg-neutral-800/50 hover:bg-white"
+            >
+              {loading ? 'Loading…' : 'Load more'}
+            </button>
+          ) : (
+            <div className="text-sm opacity-60">No more results</div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
