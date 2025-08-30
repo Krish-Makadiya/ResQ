@@ -7,6 +7,7 @@ function startOfDayUTC(date = new Date()) {
     return d;
 }
 router.post('/', async (req, res) => {
+    console.log("Hello POST");
     try {
         const auth = req.auth;
         if (!auth?.userId)
