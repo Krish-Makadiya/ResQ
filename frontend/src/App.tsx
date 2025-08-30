@@ -10,6 +10,7 @@ import Appointment from './pages/Appointment';
 import MyDays from './pages/MyDays';
 import MoodCheck from './pages/MoodCheck';
 import Journal from './pages/Journal';
+import HaveCall from './pages/HaveCall';
 import CognitiveExercises from './pages/CognitiveExercises';
 import Onboarding from './pages/Onboarding';
 import { SidebarLayout } from './components/SidebarLayout';
@@ -35,6 +36,7 @@ function ProtectedRoutes() {
           <Route path="/mood-check" element={<MoodCheck />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/cognitive" element={<CognitiveExercises />} />
+          <Route path="/have-call" element={<HaveCall />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </SidebarLayout>

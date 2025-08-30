@@ -110,6 +110,14 @@ export function SidebarLayout({ children }: { children: React.ReactNode }) {
             </div>
             <span className={`whitespace-nowrap transition-all duration-300 ${open ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10 absolute'}`}>Cognitive</span>
           </Link>
+
+          <Link className={linkClass('/have-call')} to="/have-call">
+            <div className="relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-brand-blue/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <Brain size={20} className="relative" />
+            </div>
+            <span className={`whitespace-nowrap transition-all duration-300 ${open ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10 absolute'}`}>Have Call</span>
+          </Link>
         </nav>
       </aside>
       <main className="p-6 lg:p-8 overflow-y-auto h-screen">{children}</main>
