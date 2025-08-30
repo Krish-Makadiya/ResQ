@@ -29,7 +29,7 @@ export default function CanvasPage() {
                 const files = api.getFiles();
                 const payload = { elements: scene, appState, files };
                 const created = await apiPost<{ aiInsight?: string }>(
-                    "http://localhost:4000/api/drawings",
+                    "/drawings",
                     {
                         sceneJson: payload,
                         inputType: "draw",
